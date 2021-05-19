@@ -12,12 +12,19 @@ class Source {
 	public:
 		int duration;
 		Fdtd * fdtd;
+		Fdtd3d* fdtd3d;
 		int t;
 	
 		
 		Source(Fdtd * fz, int d){
 			duration = d;
 			fdtd = fz;
+			t = 0;
+		};
+		
+		Source(Fdtd3d * fz, int d){
+			duration = d;
+			fdtd3d = fz;
 			t = 0;
 		};
 		
@@ -92,12 +99,7 @@ class PlaneWave : public Source {
 					amplitude * cos( 2*M_PI*t * fdtd->cdt/lambda ) ; 
 			}
 			
-		};
-		
-		double gaussianProfile(int y){
-			return 1.0 / width * exp( - pow(3.0*y / width , 2) * 1.0/2 );
-		};
-	
+		};	
 };
 
 
@@ -138,6 +140,47 @@ class GaussianBeamMM : public Source {
 		};
 	
 };
+
+
+
+class GaussianBeam3d : public Source {
+	
+	double lambda;
+	Fdtd3d::point location;
+	int width;
+	double amplitude;
+	
+	public:
+		GaussianBeam3d(Fdtd3d::point p1, int w, double amp, double wavelength, Fdtd3d * fz) : Source(fz, INT_MAX) {
+			location = p1;
+			width = w;
+			amplitude = amp;
+			lambda = wavelength; 
+		};
+		
+		void inject(){
+			Source::inject();
+			int y = 50;
+			for( int x = 1; x < fdtd3d->nx-1; x++ ) {
+				for( int y = 1; y < fdtd3d->ny-1; y++ ) {
+					double rad = sqrt( pow((double)x - location.x, 2) + pow((double)y - location.y, 2) ); 
+					fdtd3d->grid[x][y][location.z].E[0] = gaussianProfile(rad)*
+						amplitude * sin( 2*M_PI*t * fdtd3d->cdt / lambda ) ;
+					fdtd3d->grid[x][y][location.z].H[1] = gaussianProfile(rad)*
+						amplitude * cos( 2*M_PI*t * fdtd3d->cdt / lambda ) ;
+					fdtd3d->grid[x][y][location.z-1].H[1] = 0 ;
+				}
+			}
+			//cout<< "    ## "<< 2 *t * fdtd3d->cdt / lambda;
+		};
+		
+		double gaussianProfile(double rad){
+			return 1.0 / width * exp( - pow(3.0*rad / width , 2) * 1.0/2 );
+		};
+	
+};
+
+
 
 #endif
 

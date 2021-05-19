@@ -21,13 +21,15 @@ using namespace std;
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#define TEST
+//#define TEST
 #define PML
 
 #include "GLComponents/Font.h"
 #include "GLComponents/Panel.h"
+#include "GLComponents/Panel3d.h"
 
 #include "Fdtd.h"
+#include "Fdtd3d.h"
 #include "Source.h"
 
 
@@ -36,8 +38,8 @@ class Form1: public QWidget {
 	
 	private:
 		
-		Panel * main;
-		Fdtd * fdtd;
+		Panel3d * main;
+		Fdtd3d * fdtd;
 		Source * source;
 		Source * source2;
 		Source * source3;
@@ -48,12 +50,13 @@ class Form1: public QWidget {
 			
 			Font * f = new Font("res/monospaced/DroidSansMono.ttf", 12, Font::createRGBA(0,0,0,255), this);
 			
-			fdtd = new Fdtd(782/2,416/2);
+			fdtd = new Fdtd3d(100,100, 110);
 			
-			source = new GaussianBeam( (Fdtd::point){30, 100}, 20, 100, 30, fdtd); 
+			//source = new GaussianBeam( (Fdtd::point){30, 100}, 20, 100, 30, fdtd); 
+			source = new GaussianBeam3d( (Fdtd3d::point){50,50, 22}, 20, 100, 30, fdtd); 
 			
 			
-			main = new Panel(this, f, fdtd);
+			main = new Panel3d(this, f, fdtd);
 			
 			QTimer * timer = new QTimer(this);
 			connect(timer, SIGNAL(timeout()), this, SLOT(run()));
@@ -61,7 +64,7 @@ class Form1: public QWidget {
 			#ifndef PML
 				timer->setInterval(20);
 			#else
-				timer->setInterval(500);
+				timer->setInterval(1000);
 			#endif
 			timer->start();
 				
@@ -70,7 +73,7 @@ class Form1: public QWidget {
 	
   private slots:
 	void run(){
-				if (fdtd->t < 900) source->inject();
+				if (fdtd->t < 99200) source->inject();
 				fdtd->algorithmstep();
 				main->update();
 	};

@@ -95,7 +95,7 @@ class Fdtd {
 			for(int i = 0; i<nx; i++){
 				for(int j = 0; j<ny; j++){
 					if( qBlue( picture.pixel(i,j) ) < 128 ){
-						setIsotropic(i,j, 2.25, 1.4);
+						setIsotropic(i,j, 2.25);
 					}
 				}
 			
@@ -103,9 +103,8 @@ class Fdtd {
 			
 		};
 		
-		void setIsotropic(int x, int y, double epsilon_value, double mu_value){
+		void setIsotropic(int x, int y, double epsilon_value){
 			grid[x][y].epsilon_r[0] = grid[x][y].epsilon_r[1] = grid[x][y].epsilon_r[2] = epsilon_value;
-			//grid[x][y].mu_r[0] = grid[x][y].mu_r[1] = grid[x][y].mu_r[2] = mu_value;
 		};
 		
 		void rectangle(int x1, int x2, int y1, int y2, double epsilon, double mu){
@@ -116,24 +115,6 @@ class Fdtd {
 				}
 			}
 			
-		};
-		
-		void setPML(int border){
-			double tangential_epsilon = 5;
-			double tangential_mu = 5;
-			for(int i = 0; i < border; i++) {
-				for(int j = i; j < ny - i; j++){
-					setIsotropic(i,j, 1 + i*0.2, 1 + i*0.05);
-					setIsotropic(nx-i-1,j, 1 + i*0.2, 1 + i*0.05);
-				}
-			}
-			
-			for(int j = 0; j < border; j++) {
-				for(int i = j; i < nx - j; i++){
-					setIsotropic(i,j, 1 + j*0.2, 1 + j*0.05);
-					setIsotropic(i,ny-j-1, 1 + j*0.2, 1 + j*0.05);
-				}
-			}
 		};
 		
 		double part_H_x(int j, int x, int y){

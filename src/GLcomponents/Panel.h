@@ -144,8 +144,8 @@ class Panel : public GLComponent {
 			#ifndef TEST
 				
 			if( fdtd->t%10 == 0 ) {
-				//sprintf(text, "../gif/p%03d.jpg", fdtd->t/10 );
-				sprintf(text, "./gif/p%d.dat", fdtd->t/10 );
+				//sprintf(text, "p%03d.jpg", fdtd->t/10 );
+				sprintf(text, "p%d.dat", fdtd->t/10 );
 				write_to_file(text);
 			};
 			
