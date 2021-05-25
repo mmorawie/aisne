@@ -3,7 +3,7 @@
 #ifndef FDTD3D_H
 #define FDTD3D_H
 
-
+#include <windows.h>
 #include <math.h>
 
 class Fdtd3d {
@@ -97,16 +97,17 @@ class Fdtd3d {
 			}// next i
 			
 			
+			// geometry 
 				
-			circle(50,50, 30, 1.5);
-			circle(50,50, 15, 4.5);
+			circle(50,50, 30, 2.085136); 
+			circle(50,50, 15, 2.298257); 
 			
 			
 			for(int i = 0; i<nx; i++){
 				for(int j = 0; j<ny; j++){
 					for(int k = 0; k<nz; k++){
-						if(k > 40 && k < 80 && i > 60) setIsotropic(i,j,k, 1);
-						if(k > 50 && k < 70 && i > 50) setIsotropic(i,j,k, 1);
+						if(k > 40 +30 && k < 80 +30 && i > 60) setIsotropic(i,j,k, 1);
+						if(k > 50 +30 && k < 70 +30 && i > 50) setIsotropic(i,j,k, 1);
 					}
 				}
 			}
@@ -229,16 +230,20 @@ class Fdtd3d {
 		
 		void algorithmstep(){
 			
-			for(int i = 1; i < nx-1; i++)
-				for(int j = 1; j < ny-1; j++)
+			for(int i = 1; i < nx-1; i++){
+				for(int j = 1; j < ny-1; j++){
 					for(int k = 1; k < nz-1; k++)
 						updateE(i,j,k);
+				}
+				Sleep(40);
+			}
 					
-			for(int i = 1; i < nx-1; i++)
+			for(int i = 1; i < nx-1; i++){
 				for(int j = 1; j < ny-1; j++)
 					for(int k = 1; k < nz-1; k++)
 						updateH(i,j,k);
-					
+				Sleep(40);	
+			}
 			t = t + 1;
 			
 		}
