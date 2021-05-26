@@ -4,7 +4,7 @@ Simple FDTD implementation
 Some results of this program are available at https://fdtdproject.wordpress.com
 
 
-The algorithm itself can be found in the src/Fdtd.h and src/Fdtd3d.h files.
+The algorithm itself can be found in the src/fdtd.cpp and src/fdtd3d.cpp files.
 As implemented now, the the simulation has the following parameters:
 
 time step = 0.1 fs
