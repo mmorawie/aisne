@@ -1,5 +1,5 @@
 #include <QApplication>
-#include <QPushButton>
+//#include <QPushButton>
 
 #include <QObject>
 #include <QWidget>
@@ -21,7 +21,6 @@ using namespace std;
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-//#define TEST
 #define PML
 
 #include "GLComponents/Font.h"
@@ -50,10 +49,13 @@ class Form1: public QWidget {
 			
 			Font * f = new Font("res/monospaced/DroidSansMono.ttf", 12, Font::createRGBA(0,0,0,255), this);
 			
-			fdtd = new Fdtd3d(100,100, 110);
+			fdtd = new Fdtd3d(100,100, 170);
+		//	fdtd = new Fdtd(391, 208);
 			
-			//source = new GaussianBeam( (Fdtd::point){30, 100}, 20, 100, 30, fdtd); 
-			source = new GaussianBeam3d( (Fdtd3d::point){50,50, 22}, 20, 100, 30, fdtd); 
+		//	source = new GaussianBeam( (Fdtd::point){35, 102}, 20, 100, 30, fdtd); 
+		//	source = new GaussianBeamMM( (Fdtd::point){35, 104}, 20, 100, 15, 2, fdtd); 
+		
+			source = new GaussianBeam3d( (Fdtd3d::point){50,50, 22}, 20, 100, 20, fdtd); 
 			
 			
 			main = new Panel3d(this, f, fdtd);
@@ -73,9 +75,9 @@ class Form1: public QWidget {
 	
   private slots:
 	void run(){
-				if (fdtd->t < 99200) source->inject();
+				if (fdtd->t < 999200) source->inject();
 				fdtd->algorithmstep();
-				main->update();
+				main->update();				
 	};
    
   

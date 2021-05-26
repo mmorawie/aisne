@@ -13,5 +13,5 @@ cell size = 0.1 um
 
 
 
-A full build requires Qt 4.0 and Freetype libraries.
+A full build requires Qt 4.0 and Freetype libraries. 
 

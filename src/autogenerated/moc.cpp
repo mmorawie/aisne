@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'aisne.cpp'
 **
-** Created: ?r 19. maj 08:46:16 2021
+** Created: ?r 26. maj 22:22:13 2021
 **      by: The Qt Meta Object Compiler version 58 (Qt 4.0.0)
 **
 ** WARNING! All changes made in this file will be lost!
